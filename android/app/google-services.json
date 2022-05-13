@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "125554084285",
+    "project_id": "crudnew-e2cb6",
+    "storage_bucket": "crudnew-e2cb6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:125554084285:android:b14d4d5699b040408a6ad4",
+        "android_client_info": {
+          "package_name": "com.kiran.crudapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "125554084285-r9nlat21bo8kk4r0pb8turl5vu42rb1c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqJlg85tGDIoePW2u8lfEZlarKHQM2IpM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "125554084285-r9nlat21bo8kk4r0pb8turl5vu42rb1c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
