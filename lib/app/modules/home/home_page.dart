@@ -1,16 +1,17 @@
 import 'package:crud_app_flutter/app/core/values/colors.dart';
-import 'package:crud_app_flutter/app/data/provider/database/database_controller.dart';
-import 'package:crud_app_flutter/app/data/provider/database/database_functions.dart';
-import 'package:crud_app_flutter/app/data/provider/firebase/user_authentication.dart';
+import 'package:crud_app_flutter/app/data/services/firebase_auth.dart';
+import 'package:crud_app_flutter/app/data/services/local_database.dart';
 import 'package:crud_app_flutter/app/global/widgets/bottom_sheet.dart';
+import 'package:crud_app_flutter/app/modules/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key);
-  final DataController dataController = Get.put(DataController());
+class HomePage extends GetView<DataController> {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    final DataController dataController = Get.put(DataController());
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -23,7 +24,7 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () {
-              signOutUser(context);
+              signOutUser();
             },
           ),
         ],
@@ -36,7 +37,7 @@ class HomePage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                   side: BorderSide(
-                    color: Colors.grey.withOpacity(0.2),
+                    color: context.theme.backgroundColor,
                     width: 1,
                   ),
                 ),
@@ -60,10 +61,10 @@ class HomePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        'Age:' + dataController.mylist[index].age,
+                        'Age:${dataController.mylist[index].age}',
                       ),
                       Text(
-                        'RollNo:' + dataController.mylist[index].rollno,
+                        'RollNo:${dataController.mylist[index].rollno}',
                       ),
                     ],
                   ),
@@ -91,7 +92,7 @@ class HomePage extends StatelessWidget {
                           ),
                           onPressed: () {
                             int? a = dataController.mylist[index].id;
-                            DatabaseHelper.instance.deleteStudent(a!);
+                            CrudDB().deleteStudent(a!);
                             Get.rawSnackbar(
                               message: 'Successfully deleted a Student',
                               backgroundColor: red,

@@ -1,31 +1,26 @@
+import 'package:crud_app_flutter/app/modules/login/login_controller.dart';
+import 'package:crud_app_flutter/app/modules/signup/signup_controller.dart';
 import 'package:crud_app_flutter/app/routes/app_pages.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get.dart';
 
-class ValidateEmailAndPassword {
-  final String emailController;
-  final String passwordController;
-
-  bool? state;
-  GlobalKey<FormState> key;
-  ValidateEmailAndPassword(
-      {required this.emailController,
-      required this.passwordController,
-      required this.key,
-      this.state});
+class AuthController extends GetxController {
   String errorMessage = '';
+  final SignUpController signUpController = Get.put(SignUpController());
+  final LoginController loginController = Get.put(LoginController());
 
-  void userSignInAndSighnUp() async {
+  Future<void> userSignInAndSighnUp(
+      {required GlobalKey<FormState> key, required bool? state}) async {
     if (key.currentState!.validate()) {
       try {
         if (state == true) {
           //validation of signing
           await FirebaseAuth.instance
               .signInWithEmailAndPassword(
-                  email: emailController, password: passwordController)
+                  email: loginController.loginEmailController.text.trim(),
+                  password: loginController.passwordController.text.trim())
               .then(
             (value) {
               Get.offAllNamed(Routes.home);
@@ -35,7 +30,9 @@ class ValidateEmailAndPassword {
         } else {
           await FirebaseAuth.instance
               .createUserWithEmailAndPassword(
-                  email: emailController, password: passwordController)
+                  email: signUpController.signupemailController.text.trim(),
+                  password:
+                      signUpController.signupPasswordController.text.trim())
               .then(
             (value) {
               Get.offAllNamed(Routes.home);
@@ -56,7 +53,7 @@ class ValidateEmailAndPassword {
 }
 
 //Sign-out functionality
-void signOutUser(BuildContext ctx) {
+void signOutUser() {
   FirebaseAuth.instance
       .signOut()
       .then((value) => Get.offAllNamed(Routes.login));

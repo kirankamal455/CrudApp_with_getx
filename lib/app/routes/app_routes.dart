@@ -1,3 +1,4 @@
+import 'package:crud_app_flutter/app/modules/home/home_binding.dart';
 import 'package:crud_app_flutter/app/modules/home/home_page.dart';
 import 'package:crud_app_flutter/app/modules/login/login_binding.dart';
 import 'package:crud_app_flutter/app/modules/login/login_page.dart';
@@ -15,16 +16,16 @@ class AppPages {
         page: () => SplashScreen(),
         binding: SplashBinding()),
     GetPage(
-      name: Routes.home,
-      page: () => HomePage(),
-    ),
+        name: Routes.home,
+        page: () => const HomePage(),
+        binding: HomeBinding()),
     GetPage(
         name: Routes.login,
         page: () => const LoginPage(),
         binding: LoginBinding()),
     GetPage(
         name: Routes.signup,
-        page: () => SignUpScreen(),
+        page: () => const SignUpScreen(),
         binding: SignUpBinding()),
   ];
 }

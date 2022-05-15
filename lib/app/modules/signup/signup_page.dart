@@ -4,15 +4,16 @@ import 'package:crud_app_flutter/app/modules/signup/signup_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SignUpScreen extends StatelessWidget {
-  SignUpScreen({Key? key}) : super(key: key);
-  final signUpConroller = Get.find<SignUpController>();
+class SignUpScreen extends GetView<SignUpController> {
+  const SignUpScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    final signUpController = Get.find<SignUpController>();
     return Scaffold(
       appBar: AppBar(title: const Text('Sign up')),
       body: Form(
-        key: signUpConroller.signUpFormKey,
+        key: signUpController.signUpFormKey,
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: ListView(
@@ -23,8 +24,8 @@ class SignUpScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 child: TextFormField(
-                  controller: signUpConroller.emailController,
-                  validator: signUpConroller.validateEmail,
+                  controller: signUpController.signupemailController,
+                  validator: signUpController.validateEmail,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.all(15),
@@ -37,8 +38,8 @@ class SignUpScreen extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: TextFormField(
                   obscureText: true,
-                  controller: signUpConroller.passwordController,
-                  validator: signUpConroller.validatePassword,
+                  controller: signUpController.signupPasswordController,
+                  validator: signUpController.validatePassword,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.all(15),
@@ -48,9 +49,7 @@ class SignUpScreen extends StatelessWidget {
               ),
               const SizedBox(height: 40),
               Button(
-                emailController: signUpConroller.emailController,
-                key1: signUpConroller.signUpFormKey,
-                passwordController: signUpConroller.passwordController,
+                key1: signUpController.signUpFormKey,
                 text: 'Sign Up',
                 state: false,
               ),

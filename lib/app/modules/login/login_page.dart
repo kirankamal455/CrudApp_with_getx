@@ -1,7 +1,6 @@
 import 'package:crud_app_flutter/app/global/widgets/elevated_button.dart';
 import 'package:crud_app_flutter/app/global/widgets/text_field.dart';
 import 'package:crud_app_flutter/app/modules/login/login_controller.dart';
-import 'package:crud_app_flutter/app/modules/signup/signup_controller.dart';
 import 'package:crud_app_flutter/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -11,16 +10,17 @@ import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 class LoginPage extends GetView<LoginController> {
   const LoginPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final SignUpController signupController = Get.put(SignUpController());
+    final loginController = Get.put(LoginController());
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
         automaticallyImplyLeading: false,
       ),
       body: Form(
-        key: controller.loginFormKey,
+        key: loginController.loginFormKey,
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(10),
@@ -32,8 +32,8 @@ class LoginPage extends GetView<LoginController> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: TextFormField(
-                    controller: controller.emailController,
-                    validator: signupController.validateEmail,
+                    controller: loginController.loginEmailController,
+                    validator: loginController.validateEmail,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       contentPadding: EdgeInsets.all(15),
@@ -46,8 +46,8 @@ class LoginPage extends GetView<LoginController> {
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: TextFormField(
                     obscureText: true,
-                    controller: controller.passwordController,
-                    validator: signupController.validatePassword,
+                    controller: loginController.passwordController,
+                    validator: loginController.validatePassword,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       contentPadding: EdgeInsets.all(15),
@@ -57,9 +57,7 @@ class LoginPage extends GetView<LoginController> {
                 ),
                 const SizedBox(height: 40),
                 Button(
-                  emailController: controller.emailController,
-                  key1: controller.loginFormKey,
-                  passwordController: controller.passwordController,
+                  key1: loginController.loginFormKey,
                   text: 'Sign In',
                   state: true,
                 ),

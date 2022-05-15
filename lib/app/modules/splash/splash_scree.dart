@@ -1,15 +1,16 @@
-import 'package:crud_app_flutter/app/global/widgets/progress_bar.dart';
+import 'package:crud_app_flutter/app/core/theme/app_colors.dart';
+import 'package:crud_app_flutter/app/core/utils/progress_bar.dart';
 import 'package:crud_app_flutter/app/modules/splash/splash_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends GetView<SplashController> {
   SplashScreen({Key? key}) : super(key: key);
   final storeController = Get.put(SplashController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFD600),
+      backgroundColor: lightyellow,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[

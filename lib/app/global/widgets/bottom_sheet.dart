@@ -1,4 +1,4 @@
-import 'package:crud_app_flutter/app/data/provider/database/database_controller.dart';
+import 'package:crud_app_flutter/app/modules/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

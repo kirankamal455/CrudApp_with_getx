@@ -1,36 +1,31 @@
-import 'package:crud_app_flutter/app/data/provider/firebase/user_authentication.dart';
+import 'package:crud_app_flutter/app/data/services/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
 
 class Button extends StatelessWidget {
-  final TextEditingController emailController;
-  final TextEditingController passwordController;
   final bool? state;
   final GlobalKey<FormState> key1;
   final String text;
   const Button({
-    required this.emailController,
     required this.key1,
     Key? key,
-    required this.passwordController,
     required this.text,
     this.state,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final AuthController authController = Get.put(AuthController());
+
     return Container(
       height: 46,
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
       child: ElevatedButton(
-        child: Text(text, style: const TextStyle(fontSize: 16)),
         onPressed: () {
-          final validation = ValidateEmailAndPassword(
+          authController.userSignInAndSighnUp(
             key: key1,
-            emailController: emailController.text.trim(),
-            passwordController: passwordController.text.trim(),
             state: state,
           );
-          validation.userSignInAndSighnUp();
         },
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -39,6 +34,7 @@ class Button extends StatelessWidget {
             ),
           ),
         ),
+        child: Text(text, style: const TextStyle(fontSize: 16)),
       ),
     );
   }

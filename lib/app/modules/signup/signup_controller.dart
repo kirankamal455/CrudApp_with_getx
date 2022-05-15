@@ -5,23 +5,25 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 class SignUpController extends GetxController {
   GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
 
-  late TextEditingController emailController, passwordController;
+  late TextEditingController signupemailController, signupPasswordController;
+  final TextEditingController kiran = TextEditingController();
+
   @override
   void onInit() {
     super.onInit();
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
+    signupemailController = TextEditingController();
+    signupPasswordController = TextEditingController();
   }
 
   @override
   void onClose() {
-    emailController.dispose();
-    passwordController.dispose();
+    signupemailController.dispose();
+    signupPasswordController.dispose();
   }
 
   ///To checking   the email field is empty or not
-  String? validateEmail(String? emailController) {
-    if (emailController == null || emailController.isEmpty) {
+  String? validateEmail(String? signupemailController) {
+    if (signupemailController == null || signupemailController.isEmpty) {
       return 'Email  addrees is required';
     }
 
@@ -29,8 +31,8 @@ class SignUpController extends GetxController {
   }
 
 //To checking the password field is empty or not
-  String? validatePassword(String? passwordController) {
-    if (passwordController == null || passwordController.isEmpty) {
+  String? validatePassword(String? signupPasswordController) {
+    if (signupPasswordController == null || signupPasswordController.isEmpty) {
       return 'Password is required';
     }
     return null;
