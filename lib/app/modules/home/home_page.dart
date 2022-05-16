@@ -11,7 +11,6 @@ class HomePage extends GetView<DataController> {
 
   @override
   Widget build(BuildContext context) {
-    final DataController dataController = Get.put(DataController());
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -31,7 +30,7 @@ class HomePage extends GetView<DataController> {
       ),
       body: Obx(
         () => ListView.builder(
-            itemCount: dataController.mylist.length,
+            itemCount: controller.mylist.length,
             itemBuilder: (context, index) {
               return Card(
                 shape: RoundedRectangleBorder(
@@ -52,7 +51,7 @@ class HomePage extends GetView<DataController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        dataController.mylist[index].name,
+                        controller.mylist[index].name,
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -61,10 +60,10 @@ class HomePage extends GetView<DataController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        'Age:${dataController.mylist[index].age}',
+                        'Age:${controller.mylist[index].age}',
                       ),
                       Text(
-                        'RollNo:${dataController.mylist[index].rollno}',
+                        'RollNo:${controller.mylist[index].rollno}',
                       ),
                     ],
                   ),
@@ -76,10 +75,10 @@ class HomePage extends GetView<DataController> {
                           icon: const Icon(Icons.edit, color: Colors.yellow),
                           onPressed: () {
                             final details = BottomUpSheet(
-                                id: dataController.mylist[index].id,
-                                name: dataController.mylist[index].name,
-                                age: dataController.mylist[index].age,
-                                rollno: dataController.mylist[index].rollno,
+                                id: controller.mylist[index].id,
+                                name: controller.mylist[index].name,
+                                age: controller.mylist[index].age,
+                                rollno: controller.mylist[index].rollno,
                                 context: context);
 
                             details.studentsDetailsForm();
@@ -91,7 +90,7 @@ class HomePage extends GetView<DataController> {
                             color: Colors.red,
                           ),
                           onPressed: () {
-                            int? a = dataController.mylist[index].id;
+                            int? a = controller.mylist[index].id;
                             CrudDB().deleteStudent(a!);
                             Get.rawSnackbar(
                               message: 'Successfully deleted a Student',

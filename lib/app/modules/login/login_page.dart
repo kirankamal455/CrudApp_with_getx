@@ -4,23 +4,20 @@ import 'package:crud_app_flutter/app/modules/login/login_controller.dart';
 import 'package:crud_app_flutter/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 class LoginPage extends GetView<LoginController> {
   const LoginPage({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    final loginController = Get.put(LoginController());
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
         automaticallyImplyLeading: false,
       ),
       body: Form(
-        key: loginController.loginFormKey,
+        key: controller.loginFormKey,
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(10),
@@ -32,8 +29,8 @@ class LoginPage extends GetView<LoginController> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: TextFormField(
-                    controller: loginController.loginEmailController,
-                    validator: loginController.validateEmail,
+                    controller: controller.loginEmailController,
+                    validator: controller.validateEmail,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       contentPadding: EdgeInsets.all(15),
@@ -46,8 +43,8 @@ class LoginPage extends GetView<LoginController> {
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: TextFormField(
                     obscureText: true,
-                    controller: loginController.passwordController,
-                    validator: loginController.validatePassword,
+                    controller: controller.passwordController,
+                    validator: controller.validatePassword,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       contentPadding: EdgeInsets.all(15),
@@ -57,7 +54,7 @@ class LoginPage extends GetView<LoginController> {
                 ),
                 const SizedBox(height: 40),
                 Button(
-                  key1: loginController.loginFormKey,
+                  key1: controller.loginFormKey,
                   text: 'Sign In',
                   state: true,
                 ),

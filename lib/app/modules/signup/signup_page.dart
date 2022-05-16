@@ -9,11 +9,10 @@ class SignUpScreen extends GetView<SignUpController> {
 
   @override
   Widget build(BuildContext context) {
-    final signUpController = Get.find<SignUpController>();
     return Scaffold(
       appBar: AppBar(title: const Text('Sign up')),
       body: Form(
-        key: signUpController.signUpFormKey,
+        key: controller.signUpFormKey,
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: ListView(
@@ -24,8 +23,8 @@ class SignUpScreen extends GetView<SignUpController> {
               Container(
                 padding: const EdgeInsets.all(10),
                 child: TextFormField(
-                  controller: signUpController.signupemailController,
-                  validator: signUpController.validateEmail,
+                  controller: controller.signupemailController,
+                  validator: controller.validateEmail,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.all(15),
@@ -38,8 +37,8 @@ class SignUpScreen extends GetView<SignUpController> {
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: TextFormField(
                   obscureText: true,
-                  controller: signUpController.signupPasswordController,
-                  validator: signUpController.validatePassword,
+                  controller: controller.signupPasswordController,
+                  validator: controller.validatePassword,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.all(15),
@@ -49,7 +48,7 @@ class SignUpScreen extends GetView<SignUpController> {
               ),
               const SizedBox(height: 40),
               Button(
-                key1: signUpController.signUpFormKey,
+                key1: controller.signUpFormKey,
                 text: 'Sign Up',
                 state: false,
               ),
