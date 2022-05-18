@@ -3,6 +3,7 @@ import 'package:crud_app_flutter/app/global/widgets/text_field.dart';
 import 'package:crud_app_flutter/app/modules/login/login_controller.dart';
 import 'package:crud_app_flutter/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
@@ -30,7 +31,7 @@ class LoginPage extends GetView<LoginController> {
                   padding: const EdgeInsets.all(10),
                   child: TextFormField(
                     controller: controller.loginEmailController,
-                    validator: controller.validateEmail,
+                    validator: controller.validator1,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       contentPadding: EdgeInsets.all(15),
@@ -44,7 +45,7 @@ class LoginPage extends GetView<LoginController> {
                   child: TextFormField(
                     obscureText: true,
                     controller: controller.passwordController,
-                    validator: controller.validatePassword,
+                    validator: controller.validator2,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       contentPadding: EdgeInsets.all(15),

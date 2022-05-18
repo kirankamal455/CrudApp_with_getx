@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
@@ -6,7 +7,8 @@ class SignUpController extends GetxController {
   GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
 
   late TextEditingController signupemailController, signupPasswordController;
-
+  final validator1 = ValidationBuilder().email().maxLength(50).build();
+  final validator2 = ValidationBuilder().build();
   @override
   void onInit() {
     super.onInit();
@@ -18,22 +20,5 @@ class SignUpController extends GetxController {
   void onClose() {
     signupemailController.dispose();
     signupPasswordController.dispose();
-  }
-
-  ///To checking   the email field is empty or not
-  String? validateEmail(String? signupemailController) {
-    if (signupemailController == null || signupemailController.isEmpty) {
-      return 'Email  addrees is required';
-    }
-
-    return null;
-  }
-
-//To checking the password field is empty or not
-  String? validatePassword(String? signupPasswordController) {
-    if (signupPasswordController == null || signupPasswordController.isEmpty) {
-      return 'Password is required';
-    }
-    return null;
   }
 }

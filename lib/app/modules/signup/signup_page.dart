@@ -24,7 +24,7 @@ class SignUpScreen extends GetView<SignUpController> {
                 padding: const EdgeInsets.all(10),
                 child: TextFormField(
                   controller: controller.signupemailController,
-                  validator: controller.validateEmail,
+                  validator: controller.validator1,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.all(15),
@@ -38,7 +38,7 @@ class SignUpScreen extends GetView<SignUpController> {
                 child: TextFormField(
                   obscureText: true,
                   controller: controller.signupPasswordController,
-                  validator: controller.validatePassword,
+                  validator: controller.validator2,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.all(15),
