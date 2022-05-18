@@ -1,16 +1,21 @@
 import 'package:crud_app_flutter/app/core/theme/app_theme.dart';
-import 'package:crud_app_flutter/app/data/services/local_database.dart';
+import 'package:crud_app_flutter/app/data/repository/student/i_student_repository.dart';
+import 'package:crud_app_flutter/app/data/repository/student/student_repository.dart';
+import 'package:crud_app_flutter/app/data/services/db/db_service.dart';
+import 'package:crud_app_flutter/app/data/services/db/i_db_service.dart';
+
 import 'package:crud_app_flutter/app/routes/app_pages.dart';
 import 'package:crud_app_flutter/app/routes/app_routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/get.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await CrudDB().initializeDataBase();
-  CrudDB().getAllStudentsDetails();
+  await Get.putAsync<IDbService>(
+      () async => await DbService().initializeDataBase());
+
   runApp(const MyApp());
 }
 

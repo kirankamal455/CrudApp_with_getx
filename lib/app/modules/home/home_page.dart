@@ -1,6 +1,7 @@
 import 'package:crud_app_flutter/app/core/values/colors.dart';
+import 'package:crud_app_flutter/app/data/services/db/db_service.dart';
 import 'package:crud_app_flutter/app/data/services/firebase_auth.dart';
-import 'package:crud_app_flutter/app/data/services/local_database.dart';
+
 import 'package:crud_app_flutter/app/global/widgets/bottom_sheet.dart';
 import 'package:crud_app_flutter/app/modules/home/home_controller.dart';
 import 'package:flutter/material.dart';
@@ -28,9 +29,9 @@ class HomePage extends GetView<DataController> {
           ),
         ],
       ),
-      body: Obx(
-        () => ListView.builder(
-            itemCount: controller.mylist.length,
+      body: controller.obx(
+        (state) => ListView.builder(
+            itemCount: state!.length,
             itemBuilder: (context, index) {
               return Card(
                 shape: RoundedRectangleBorder(
@@ -51,7 +52,7 @@ class HomePage extends GetView<DataController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        controller.mylist[index].name,
+                        state[index].name,
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -60,10 +61,10 @@ class HomePage extends GetView<DataController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        'Age:${controller.mylist[index].age}',
+                        'Age:${state[index].age}',
                       ),
                       Text(
-                        'RollNo:${controller.mylist[index].rollno}',
+                        'RollNo:${state[index].rollno}',
                       ),
                     ],
                   ),
@@ -75,10 +76,10 @@ class HomePage extends GetView<DataController> {
                           icon: const Icon(Icons.edit, color: Colors.yellow),
                           onPressed: () {
                             final details = BottomUpSheet(
-                                id: controller.mylist[index].id,
-                                name: controller.mylist[index].name,
-                                age: controller.mylist[index].age,
-                                rollno: controller.mylist[index].rollno,
+                                id: controller.details[index].id,
+                                name: controller.details[index].name,
+                                age: controller.details[index].age,
+                                rollno: controller.details[index].rollno,
                                 context: context);
 
                             details.studentsDetailsForm();
@@ -90,8 +91,8 @@ class HomePage extends GetView<DataController> {
                             color: Colors.red,
                           ),
                           onPressed: () {
-                            int? a = controller.mylist[index].id;
-                            CrudDB().deleteStudent(a!);
+                            int? a = controller.details[index].id;
+                            DbService().deleteStudent(a!);
                             Get.rawSnackbar(
                               message: 'Successfully deleted a Student',
                               backgroundColor: red,
@@ -104,6 +105,16 @@ class HomePage extends GetView<DataController> {
                 ),
               );
             }),
+        onLoading: const Center(child: CircularProgressIndicator()),
+        onEmpty: const Text('No data found'),
+        onError: (error) => Center(
+          // optional
+          child: Text(
+            ' $error',
+            style: const TextStyle(fontSize: 18, color: Colors.red),
+            textAlign: TextAlign.center,
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),

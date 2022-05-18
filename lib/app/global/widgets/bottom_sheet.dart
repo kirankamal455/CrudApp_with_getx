@@ -1,3 +1,5 @@
+import 'package:crud_app_flutter/app/data/repository/student/i_student_repository.dart';
+import 'package:crud_app_flutter/app/data/services/db/db_service.dart';
 import 'package:crud_app_flutter/app/modules/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,7 +23,9 @@ class BottomUpSheet {
     this.rollno,
     required this.context,
   });
-  final DataController dataController = Get.put(DataController());
+  // final DataController dataController = Get.put(DataController(studentRepository: ));
+  final DataController dataController = Get.put(
+      DataController(studentRepository: Get.find<IStudentRepository>()));
 // This function will be working  when the floating button is pressed
 // It will also be working when you want to update an student
   void studentsDetailsForm() async {

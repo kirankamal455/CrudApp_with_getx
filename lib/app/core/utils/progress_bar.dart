@@ -12,7 +12,7 @@ class ProgressBar extends StatelessWidget {
         return const DecoratedBox(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Colors.white,
+            color: Colors.black,
           ),
         );
       },
