@@ -14,23 +14,22 @@ class StudentRepository implements IStudentRepository {
   @override
   Future<Result<Exception, int>> addAstudentDetails(
       {required StudentModel studentModel}) async {
-    var result = await dbService.addStudent(studentModel);
-    if (result == 0) {
-      getAllStudent();
+    try {
+      var result = await dbService.addStudent(studentModel);
       return Success(result);
-    } else {
-      return Error(Exception("Error adding student"));
+    } catch (e) {
+      return Error(e as Exception);
     }
   }
 
   @override
-  Future<Result<Exception, int>> updateStudentDetails(
+  Future<Result<Exception, int>> updateStudent(
       {required int id,
       required String name,
       required String age,
       required String rollno}) async {
     var result = await dbService.updateStudent(id, name, age, rollno);
-    if (result == 0) {
+    if (result == 1) {
       return Success(result);
     } else {
       return Error(Exception("Error update student details"));
@@ -41,7 +40,6 @@ class StudentRepository implements IStudentRepository {
   Future<Result<Exception, List<StudentModel>>> getAllStudent() async {
     try {
       var result = await dbService.getAllStudentsDetails();
-      print(result);
       return Success(result);
     } catch (e) {
       return Error(e as Exception);
@@ -51,8 +49,7 @@ class StudentRepository implements IStudentRepository {
   @override
   Future<Result<Exception, int>> deleteStudentDetails(int id) async {
     var result = await dbService.deleteStudent(id);
-
-    if (result == 0) {
+    if (result == 1) {
       return Success(result);
     } else {
       return Error(Exception("error delete"));

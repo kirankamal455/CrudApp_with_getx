@@ -1,5 +1,4 @@
 import 'package:crud_app_flutter/app/core/values/colors.dart';
-import 'package:crud_app_flutter/app/data/services/db/db_service.dart';
 import 'package:crud_app_flutter/app/data/services/firebase_auth.dart';
 
 import 'package:crud_app_flutter/app/global/widgets/bottom_sheet.dart';
@@ -30,81 +29,86 @@ class HomePage extends GetView<DataController> {
         ],
       ),
       body: controller.obx(
-        (state) => ListView.builder(
-            itemCount: state!.length,
-            itemBuilder: (context, index) {
-              return Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  side: BorderSide(
-                    color: context.theme.backgroundColor,
-                    width: 1,
-                  ),
-                ),
-                color: const Color.fromARGB(252, 252, 252, 255),
-                margin: const EdgeInsets.all(8),
-                child: ListTile(
-                  leading: const Icon(
-                    Icons.account_circle_rounded,
-                    size: 45,
-                  ),
-                  title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        state[index].name,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+        (students) => students != null
+            ? ListView.builder(
+                itemCount: students.length,
+                itemBuilder: (context, index) {
+                  var student = students[index];
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      side: BorderSide(
+                        color: context.theme.backgroundColor,
+                        width: 1,
                       ),
-                    ],
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        'Age:${state[index].age}',
-                      ),
-                      Text(
-                        'RollNo:${state[index].rollno}',
-                      ),
-                    ],
-                  ),
-                  trailing: SizedBox(
-                    width: 100,
-                    child: Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.edit, color: Colors.yellow),
-                          onPressed: () {
-                            final details = BottomUpSheet(
-                                id: controller.details[index].id,
-                                name: controller.details[index].name,
-                                age: controller.details[index].age,
-                                rollno: controller.details[index].rollno,
-                                context: context);
-
-                            details.studentsDetailsForm();
-                          },
-                        ),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.delete,
-                            color: Colors.red,
-                          ),
-                          onPressed: () {
-                            int? a = controller.details[index].id;
-                            DbService().deleteStudent(a!);
-                            Get.rawSnackbar(
-                              message: 'Successfully deleted a Student',
-                              backgroundColor: red,
-                            );
-                          },
-                        ),
-                      ],
                     ),
-                  ),
-                ),
-              );
-            }),
+                    color: const Color.fromARGB(252, 252, 252, 255),
+                    margin: const EdgeInsets.all(8),
+                    child: ListTile(
+                      leading: const Icon(
+                        Icons.account_circle_rounded,
+                        size: 45,
+                      ),
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            student.name,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'Age:${student.age}',
+                          ),
+                          Text(
+                            'RollNo:${student.rollno}',
+                          ),
+                        ],
+                      ),
+                      trailing: SizedBox(
+                        width: 100,
+                        child: Row(
+                          children: [
+                            IconButton(
+                              icon:
+                                  const Icon(Icons.edit, color: Colors.yellow),
+                              onPressed: () {
+                                final details = BottomUpSheet(
+                                    id: student.id,
+                                    name: student.name,
+                                    age: student.age,
+                                    rollno: student.rollno,
+                                    context: context,
+                                    dataController: controller);
+
+                                details.studentsDetailsForm();
+                              },
+                            ),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                              ),
+                              onPressed: () {
+                                int? a = student.id;
+                                controller.deleteStudent(a!);
+                                // Get.rawSnackbar(
+                                //   message: 'Successfully deleted a Student',
+                                //   backgroundColor: red,
+                                // );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                })
+            : const Center(child: Text("No students")),
         onLoading: const Center(child: CircularProgressIndicator()),
         onEmpty: const Text('No data found'),
         onError: (error) => Center(
@@ -119,8 +123,10 @@ class HomePage extends GetView<DataController> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          final detailsForm =
-              BottomUpSheet(context: context, dataIsAvailable: true);
+          final detailsForm = BottomUpSheet(
+              context: context,
+              dataIsAvailable: true,
+              dataController: controller);
           detailsForm.studentsDetailsForm();
         },
       ),

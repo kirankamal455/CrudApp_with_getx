@@ -11,7 +11,6 @@ class DataController extends GetxController
 
   DataController({required this.studentRepository});
 
-  final details = <StudentModel>[];
   late TextEditingController nameController = TextEditingController();
   late TextEditingController ageController = TextEditingController();
   late TextEditingController rollnoController = TextEditingController();
@@ -19,11 +18,17 @@ class DataController extends GetxController
   @override
   void onInit() {
     super.onInit();
+    getAllStudent();
     nameController = TextEditingController();
     ageController = TextEditingController();
     rollnoController = TextEditingController();
-    getAllStudent();
   }
+
+  // @override
+  // void onReady() {
+  //   super.onReady();
+  //   getAllStudent();
+  // }
 
   @override
   void onClose() {
@@ -41,11 +46,10 @@ class DataController extends GetxController
         studentModel: StudentModel(name: name, age: age, rollno: rollno));
 
     result.when((error) {
-      change(details, status: RxStatus.error(error.toString()));
-    }, (success) {
+      change(null, status: RxStatus.error(error.toString()));
+    }, (success) async {
       ///refresh the list
-      /// change(students, status: RxStatus.success());
-      getAllStudent();
+      await getAllStudent();
     });
     return result;
   }
@@ -54,30 +58,36 @@ class DataController extends GetxController
     var result = await studentRepository.getAllStudent();
 
     result.when((error) {
-      change(details, status: RxStatus.error(error.toString()));
-    }, (success) {
-      change(details, status: RxStatus.success());
+      change(null, status: RxStatus.error(error.toString()));
+    }, (students) {
+      change(null, status: RxStatus.loading());
+      change(students, status: RxStatus.success());
     });
+
     return result;
   }
 
   Future<Result<Exception, int>> updateStudentDetails(int id) async {
-    var result = await studentRepository.updateStudentDetails(
+    var result = await studentRepository.updateStudent(
         id: id,
         name: nameController.text,
         age: ageController.text,
         rollno: rollnoController.text);
     result.when((error) {
-      change(details, status: RxStatus.error(error.toString()));
-    }, (success) => getAllStudent());
+      change(null, status: RxStatus.error(error.toString()));
+    }, (success) async {
+      await getAllStudent();
+    });
     return result;
   }
 
   Future<Result<Exception, int>> deleteStudent(int id) async {
     var result = await studentRepository.deleteStudentDetails(id);
     result.when((error) {
-      change(details, status: RxStatus.error(error.toString()));
-    }, (success) => getAllStudent());
+      change(null, status: RxStatus.error(error.toString()));
+    }, (success) async {
+      await getAllStudent();
+    });
     return result;
   }
 }

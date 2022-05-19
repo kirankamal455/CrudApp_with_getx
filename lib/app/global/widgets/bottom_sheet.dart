@@ -1,17 +1,14 @@
-import 'package:crud_app_flutter/app/data/repository/student/i_student_repository.dart';
-import 'package:crud_app_flutter/app/data/services/db/db_service.dart';
 import 'package:crud_app_flutter/app/modules/home/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
-
-int k = 0;
-bool dataIsAvailable = false;
 
 class BottomUpSheet {
   int? id;
   final String? name;
   final String? age;
   final String? rollno;
+  final DataController dataController;
   final BuildContext context;
   final bool? dataIsAvailable;
 
@@ -21,17 +18,16 @@ class BottomUpSheet {
     this.dataIsAvailable,
     this.age,
     this.rollno,
+    required this.dataController,
     required this.context,
   });
-  // final DataController dataController = Get.put(DataController(studentRepository: ));
-  final DataController dataController = Get.put(
-      DataController(studentRepository: Get.find<IStudentRepository>()));
+
+  GlobalKey<FormState> form = GlobalKey<FormState>();
+
 // This function will be working  when the floating button is pressed
 // It will also be working when you want to update an student
   void studentsDetailsForm() async {
-    // if dataIsAvailable != true -> create new student
-    //  if  dataIsAvailable == true -> update an existing student
-    if (dataIsAvailable != true) {
+    if (id != null) {
       dataController.nameController.text = name!;
       dataController.ageController.text = age!;
       dataController.rollnoController.text = rollno!;
@@ -45,59 +41,61 @@ class BottomUpSheet {
             // this will prevent the soft keyboard from covering the text fields
             bottom: context.mediaQueryViewInsets.bottom + 50,
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              TextFormField(
-                controller: dataController.nameController,
-                decoration: const InputDecoration(hintText: 'Student Name'),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                controller: dataController.ageController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(hintText: 'Age'),
-              ),
-              TextFormField(
-                controller: dataController.rollnoController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(hintText: 'Roll No'),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () async {
-                    // Save Student
-                    if (id == null) {
-                      await dataController.addStudentButtonClicked();
-                      if (k == 0) {
-                        Get.rawSnackbar(
-                          message: 'Successfully Added a Student',
-                          backgroundColor: Colors.yellow,
-                        );
-                      }
-                    }
-                    if (id != null) {
-                      dataController.updateStudentDetails(id!);
-                    }
-                    // Clear the text fields
-                    dataController.nameController.text = '';
-                    dataController.ageController.text = '';
-                    dataController.rollnoController.text = '';
-
-                    // Close the bottom sheet
-                    Get.back();
-                  },
-                  child: Text(
-                      id == null ? 'Add Student' : 'Update student Details'),
+          child: Form(
+            key: form,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                TextFormField(
+                  controller: dataController.nameController,
+                  validator:
+                      ValidationBuilder().minLength(4).maxLength(10).build(),
+                  decoration: const InputDecoration(hintText: 'Student Name'),
                 ),
-              )
-            ],
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  controller: dataController.ageController,
+                  validator:
+                      ValidationBuilder().minLength(1).maxLength(2).build(),
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(hintText: 'Age'),
+                ),
+                TextFormField(
+                  controller: dataController.rollnoController,
+                  validator:
+                      ValidationBuilder().minLength(1).maxLength(2).build(),
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(hintText: 'Roll No'),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      if (form.currentState!.validate()) {
+                        if (id == null) {
+                          await dataController.addStudentButtonClicked();
+                        } else {
+                          await dataController.updateStudentDetails(id!);
+                        }
+                        // Clear the text fields
+                        form.currentState?.reset();
+
+                        // // Close the bottom sheet
+                        Get.back();
+                      }
+                    },
+                    child: Text(
+                        id == null ? 'Add Student' : 'Update student Details'),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
         backgroundColor: Colors.white);
