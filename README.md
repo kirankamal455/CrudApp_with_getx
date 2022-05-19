@@ -1,4 +1,4 @@
-# crud_app_with_gertx
+# crud_app_with_getx
 
 A simple CRUD with GetX framework
 
