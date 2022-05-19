@@ -4,17 +4,18 @@ import 'package:sqflite/sqflite.dart';
 
 import 'i_db_service.dart';
 
-class DbService extends GetxService implements IDbService {
-  late Database db1;
+late Database db1;
 
+class DbService extends GetxService implements IDbService {
   //open the database
+
   @override
   Future<DbService> initializeDataBase() async {
     db1 = await openDatabase('students.db', version: 1,
         onCreate: (Database db, int version) async {
       // Students Table creation
       await db.execute(
-          'CREATE TABLE students ( name TEXT,age TEXT,rollno TEXT, createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP)');
+          'CREATE TABLE students ( id INTEGER PRIMARY KEY, name TEXT,age TEXT,rollno TEXT, createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP)');
     });
     return this;
   }

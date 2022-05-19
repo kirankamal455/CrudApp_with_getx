@@ -19,6 +19,7 @@ class LoginPage extends GetView<LoginController> {
       ),
       body: Form(
         key: controller.loginFormKey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(10),

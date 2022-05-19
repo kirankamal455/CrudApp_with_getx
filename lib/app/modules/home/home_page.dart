@@ -95,11 +95,13 @@ class HomePage extends GetView<DataController> {
                               ),
                               onPressed: () {
                                 int? a = student.id;
-                                controller.deleteStudent(a!);
-                                // Get.rawSnackbar(
-                                //   message: 'Successfully deleted a Student',
-                                //   backgroundColor: red,
-                                // );
+                                var result = controller.deleteStudent(a!);
+                                if (result == 0) {
+                                  Get.rawSnackbar(
+                                    message: 'Successfully deleted a Student',
+                                    backgroundColor: red,
+                                  );
+                                }
                               },
                             ),
                           ],
@@ -123,10 +125,8 @@ class HomePage extends GetView<DataController> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          final detailsForm = BottomUpSheet(
-              context: context,
-              dataIsAvailable: true,
-              dataController: controller);
+          final detailsForm =
+              BottomUpSheet(context: context, dataController: controller);
           detailsForm.studentsDetailsForm();
         },
       ),

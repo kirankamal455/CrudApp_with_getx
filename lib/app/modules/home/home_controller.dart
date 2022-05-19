@@ -24,12 +24,6 @@ class DataController extends GetxController
     rollnoController = TextEditingController();
   }
 
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  //   getAllStudent();
-  // }
-
   @override
   void onClose() {
     nameController.dispose();

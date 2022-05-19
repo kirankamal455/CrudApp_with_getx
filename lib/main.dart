@@ -1,9 +1,6 @@
 import 'package:crud_app_flutter/app/core/theme/app_theme.dart';
-import 'package:crud_app_flutter/app/data/repository/student/i_student_repository.dart';
-import 'package:crud_app_flutter/app/data/repository/student/student_repository.dart';
 import 'package:crud_app_flutter/app/data/services/db/db_service.dart';
 import 'package:crud_app_flutter/app/data/services/db/i_db_service.dart';
-
 import 'package:crud_app_flutter/app/routes/app_pages.dart';
 import 'package:crud_app_flutter/app/routes/app_routes.dart';
 import 'package:firebase_core/firebase_core.dart';

@@ -10,12 +10,10 @@ class BottomUpSheet {
   final String? rollno;
   final DataController dataController;
   final BuildContext context;
-  final bool? dataIsAvailable;
 
   BottomUpSheet({
     this.name,
     this.id,
-    this.dataIsAvailable,
     this.age,
     this.rollno,
     required this.dataController,

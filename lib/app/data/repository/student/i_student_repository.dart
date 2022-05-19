@@ -4,7 +4,7 @@ import 'package:multiple_result/multiple_result.dart';
 abstract class IStudentRepository {
   Future<Result<Exception, int>> addAstudentDetails(
       {required StudentModel studentModel});
-  Future<Result<Exception, int>> updateStudentDetails(
+  Future<Result<Exception, int>> updateStudent(
       {required int id,
       required String name,
       required String age,

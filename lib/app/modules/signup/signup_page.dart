@@ -12,6 +12,7 @@ class SignUpScreen extends GetView<SignUpController> {
     return Scaffold(
       appBar: AppBar(title: const Text('Sign up')),
       body: Form(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         key: controller.signUpFormKey,
         child: Padding(
           padding: const EdgeInsets.all(10),
